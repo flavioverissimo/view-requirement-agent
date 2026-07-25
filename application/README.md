@@ -25,7 +25,7 @@ If those values are missing, the back-end cannot start.
 
 If you want the application to prepare everything and open the required terminals automatically:
 
-1. Open the `backend` folder in File Explorer.
+1. Open the `application` folder in File Explorer.
 2. Locate the file `start.ps1`.
 3. Right-click `start.ps1`.
 4. Choose `Run with PowerShell`.
@@ -38,7 +38,7 @@ If Windows blocks the script or closes the window too quickly, use the terminal 
 4. Run the commands below:
 
 ```powershell
-cd C:\path\to\backend
+cd C:\path\to\application
 powershell -ExecutionPolicy Bypass -File .\start.ps1
 ```
 
@@ -54,7 +54,7 @@ What this script does:
 If you only want to prepare the environment, but not start the application automatically, run:
 
 ```powershell
-cd C:\path\to\backend
+cd C:\path\to\application
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
 ```
 
@@ -66,7 +66,7 @@ If you want the application to prepare everything and start both services automa
 2. Move to the project folder:
 
 ```bash
-cd /path/to/backend
+cd /path/to/application
 ```
 
 3. Run:
@@ -87,7 +87,7 @@ What this script does:
 If you only want to prepare the environment, but not start the application automatically, run:
 
 ```bash
-cd /path/to/backend
+cd /path/to/application
 sh setup.sh
 ```
 
@@ -99,7 +99,7 @@ On Linux, use the same terminal-based flow:
 2. Move to the project folder:
 
 ```bash
-cd /path/to/backend
+cd /path/to/application
 ```
 
 3. Run:
@@ -111,7 +111,7 @@ sh start.sh
 If you only want to prepare the environment, but not start the application automatically, run:
 
 ```bash
-cd /path/to/backend
+cd /path/to/application
 sh setup.sh
 ```
 
@@ -132,7 +132,7 @@ Use this section if you want to create the environment yourself without helper s
 #### Windows
 
 ```powershell
-cd C:\path\to\backend\api
+cd C:\path\to\application\api
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
@@ -155,7 +155,7 @@ uvicorn main:app --reload
 #### macOS and Linux
 
 ```bash
-cd /path/to/backend/api
+cd /path/to/application/api
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -179,7 +179,7 @@ uvicorn main:app --reload
 #### Windows
 
 ```powershell
-cd C:\path\to\backend\frontend
+cd C:\path\to\application\frontend
 npm install
 npm run dev
 ```
@@ -187,7 +187,7 @@ npm run dev
 #### macOS and Linux
 
 ```bash
-cd /path/to/backend/frontend
+cd /path/to/application/frontend
 npm install
 npm run dev
 ```
@@ -200,7 +200,7 @@ The front-end expects the API at:
 http://localhost:8000/api/v1
 ```
 
-If you want to use a different API URL, create or edit `frontend/.env.local` and set:
+If you want to use a different API URL, create or edit `frontend/.env` and set:
 
 ```env
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
@@ -236,14 +236,14 @@ Official download pages:
 If Windows does not allow the script to run from File Explorer, open PowerShell and use:
 
 ```powershell
-cd C:\path\to\backend
+cd C:\path\to\application
 powershell -ExecutionPolicy Bypass -File .\start.ps1
 ```
 
 or:
 
 ```powershell
-cd C:\path\to\backend
+cd C:\path\to\application
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
 ```
 
