@@ -1,0 +1,39 @@
+{
+  "view_type": "vosv:ExportedView",
+  "note": "Illustrative examples only. They are not evaluation cases.",
+  "examples": [
+    {
+      "category": "valid",
+      "criterion": "At least 92% of music artists must contain a homepage value.",
+      "expected_fragment": {
+        "status": "valid",
+        "dimension": "qv:Completeness",
+        "observed_metric": "qv:AttributeCoverage",
+        "expected_metric": "qv:PropertyMappingCompleteness",
+        "operator": ">=",
+        "threshold": {
+          "value": 0.92,
+          "unit": "qv:Ratio"
+        }
+      }
+    },
+    {
+      "category": "clarification_required",
+      "criterion": "Artist homepage values should be valid.",
+      "expected_fragment": {
+        "status": "clarification_required",
+        "missing_or_ambiguous_fields": [
+          "consistency_constraint",
+          "threshold"
+        ]
+      }
+    },
+    {
+      "category": "insufficient_context",
+      "criterion": "The specification must include a class mapping for artists.",
+      "expected_fragment": {
+        "status": "insufficient_context"
+      }
+    }
+  ]
+}

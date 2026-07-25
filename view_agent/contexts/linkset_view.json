@@ -1,0 +1,641 @@
+{
+  "context_id": "CTX_LV_MusicArtist_v2",
+  "context_version": "2.0",
+  "ekg": {
+    "name": "DBB_Music",
+    "uri": "svm:DBB_Music_EKG",
+    "metadata_graph": "graph:metadata",
+    "quality_metadata_graph": "graph:quality_metadata",
+    "data_graph": "graph:data"
+  },
+  "target_view": {
+    "name": "MusicArtist Linkset View",
+    "uri": "svm:LV_MusicArtist",
+    "type": "vosv:LinksetView"
+  },
+  "specification": {
+    "name": "MusicArtist Linkset View Specification",
+    "uri": "svm:Spec_LV_MusicArtist",
+    "type": "vosv:LinksetViewSpecification",
+    "source_view": {
+      "name": "DBpedia Artist Exported View",
+      "uri": "svm:EV_DBpedia_Artist",
+      "type": "vosv:ExportedView"
+    },
+    "target_view": {
+      "name": "MusicBrainz Artist Exported View",
+      "uri": "svm:EV_MusicBrainz_Artist",
+      "type": "vosv:ExportedView"
+    },
+    "link_rules": [
+      {
+        "uri": "svm:LR_MusicArtist_sameAs_1",
+        "type": "vosv:LinkRule",
+        "source_class": "mo:MusicArtist",
+        "target_class": "mo:MusicArtist",
+        "link_predicate": "owl:sameAs",
+        "match_function": "svm:ArtistNameAndDateMatch",
+        "supports_transitivity": true
+      }
+    ],
+    "match_functions": [
+      {
+        "uri": "svm:ArtistNameAndDateMatch",
+        "label": "Artist name and date matching function",
+        "status": "declared",
+        "type": "vosv:MatchFunction"
+      }
+    ],
+    "declared_update_interval": {
+      "value": 7,
+      "unit": "days",
+      "xsd_duration": "P7D"
+    }
+  },
+  "ontology_metadata": {
+    "name": "MusicArtist target ontology",
+    "uri": "svm:MusicArtist_Ontology",
+    "classes": [
+      {
+        "uri": "mo:MusicArtist",
+        "label": "Music Artist"
+      }
+    ],
+    "properties": [
+      {
+        "uri": "foaf:name",
+        "label": "name",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string"
+      }
+    ],
+    "predicates": [
+      {
+        "uri": "owl:sameAs",
+        "label": "same as",
+        "domain": "mo:MusicArtist",
+        "range": "mo:MusicArtist"
+      }
+    ]
+  },
+  "materialized_view_metadata": {
+    "uri": "svm:DVG_LV_MusicArtist",
+    "type": "vosv:DataViewGraph",
+    "graph": "graph:LV_MusicArtist",
+    "approach": "materialized",
+    "generated_at_time": "2026-07-15T00:00:00Z"
+  },
+  "provenance": {
+    "generated_from_specification": "svm:Spec_LV_MusicArtist",
+    "used_data_sources": [
+      {
+        "name": "DBpedia",
+        "uri": "svm:DBpedia",
+        "update_frequency": "monthly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-01",
+          "source_last_accessed_on": "2025-10-05"
+        }
+      },
+      {
+        "name": "MusicBrainz",
+        "uri": "svm:MusicBrainz",
+        "update_frequency": "weekly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-03",
+          "source_last_accessed_on": "2025-10-05"
+        }
+      }
+    ],
+    "was_derived_from": [
+      "svm:EV_DBpedia_Artist",
+      "svm:EV_MusicBrainz_Artist"
+    ],
+    "source_graphs": [
+      "graph:EV_DBpedia_Artist",
+      "graph:EV_MusicBrainz_Artist"
+    ]
+  },
+  "quality_metadata": {
+    "catalog_id": "quality_catalog_LinksetView_v2",
+    "source_catalog_version": "linkset_mini_v1",
+    "source_file": "requirement_agent_multiview_experiment_v1/configuration/quality_metadata/quality_metadata_linkset_view_full_v1.json",
+    "target_view_type": "vosv:LinksetView",
+    "description": "Quality metadata for a small Linkset View experiment using the v8 unified output contract.",
+    "dimensions": [
+      "qv:Completeness",
+      "qv:Consistency",
+      "qv:SemanticAccuracy",
+      "qv:Timeliness"
+    ],
+    "evaluation_levels": [
+      "qv:ViewLevel",
+      "qv:InstanceLevel"
+    ],
+    "evidence_types": [
+      "qv:MaterializedViewEvidence",
+      "qv:MaterializedViewMetadataEvidence",
+      "qv:ViewSpecificationEvidence"
+    ],
+    "metrics": [
+      {
+        "uri": "qv:LinkCoverage",
+        "label": "Link Coverage",
+        "description": "Measures the proportion of source entities in the linkset scope that have at least one link to a target entity.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "link_coverage",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkRuleCompleteness",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinkRuleCompleteness",
+        "label": "Link Rule Completeness",
+        "description": "Measures whether the linkset specification declares the link rule needed to produce links for the selected source and target entity types.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "link_rule_completeness",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkCoverage",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinkPredicateConsistency",
+        "label": "Link Predicate Consistency",
+        "description": "Measures the proportion of materialized link assertions that use the expected link predicate.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "link_predicate_consistency",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkPredicateSpecificationConsistency",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinkPredicateSpecificationConsistency",
+        "label": "Link Predicate Specification Consistency",
+        "description": "Measures whether the linkset specification declares the expected link predicate for the selected source and target entity types.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "link_predicate_specification_consistency",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkPredicateConsistency",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:SameAsChainConsistency",
+        "label": "sameAs Chain Consistency",
+        "description": "Measures the proportion of sameAs links that do not introduce inconsistent sameAs chains in the materialized linkset.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "same_as_chain_consistency",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkRuleTransitivitySupport",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinkRuleTransitivitySupport",
+        "label": "Link Rule Transitivity Support",
+        "description": "Measures whether the linkset specification declares support or constraints for the transitive interpretation of sameAs links.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "link_rule_transitivity_support",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:SameAsChainConsistency",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinkAccuracy",
+        "label": "Link Accuracy",
+        "description": "Measures the proportion of materialized links judged correct according to the declared matching rule and available validation evidence.",
+        "dimension": "qv:SemanticAccuracy",
+        "quality_aspect": "link_accuracy",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:InstanceLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:MatchFunctionValidity",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:MatchFunctionValidity",
+        "label": "Match Function Validity",
+        "description": "Measures whether the linkset specification declares a valid matching function for the selected source and target entity types.",
+        "dimension": "qv:SemanticAccuracy",
+        "quality_aspect": "match_function_validity",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:InstanceLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "source_class",
+          "target_entity_type",
+          "link_predicate"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinkAccuracy",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:LinksetFreshness",
+        "label": "Linkset Freshness",
+        "description": "Measures the elapsed time between the latest materialization timestamp of the linkset view and a reference time.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "linkset_freshness_elapsed_time",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewMetadataEvidence",
+          "computed_over": "materialized_view_metadata"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:DeclaredLinksetUpdateInterval",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      },
+      {
+        "uri": "qv:DeclaredLinksetUpdateInterval",
+        "label": "Declared Linkset Update Interval",
+        "description": "Measures the maximum update interval declared for the linkset view specification, normalized to days.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "declared_linkset_update_interval",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:LinksetView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:LinksetFreshness",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Defined for requirement-interpretation experiments over linkset semantic views."
+        }
+      }
+    ]
+  }
+}

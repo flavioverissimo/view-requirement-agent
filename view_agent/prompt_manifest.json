@@ -1,0 +1,33 @@
+{
+  "system_prompt": "./system_prompt.md",
+  "views": {
+    "exported_view": {
+      "type_uri": "vosv:ExportedView",
+      "skill": "skills/exported_view.md",
+      "examples": "examples/exported_view.json",
+      "validation": "validations/exported_view.json",
+      "context": "contexts/exported_view.json"
+    },
+    "linkset_view": {
+      "type_uri": "vosv:LinksetView",
+      "skill": "skills/linkset_view.md",
+      "examples": "examples/linkset_view.json",
+      "validation": "validations/linkset_view.json",
+      "context": "contexts/linkset_view.json"
+    },
+    "unification_view": {
+      "type_uri": "vosv:UnificationView",
+      "skill": "skills/unification_view.md",
+      "examples": "examples/unification_view.json",
+      "validation": "validations/unification_view.json",
+      "context": "contexts/unification_view.json"
+    },
+    "fusion_view": {
+      "type_uri": "vosv:FusionView",
+      "skill": "skills/fusion_view.md",
+      "examples": "examples/fusion_view.json",
+      "validation": "validations/fusion_view.json",
+      "context": "contexts/fusion_view.json"
+    }
+  }
+}

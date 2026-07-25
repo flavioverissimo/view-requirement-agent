@@ -1,0 +1,609 @@
+{
+  "context_id": "CTX_FV_MusicArtist_v2",
+  "context_version": "2.0",
+  "ekg": {
+    "name": "DBB_Music",
+    "uri": "svm:DBB_Music_EKG",
+    "metadata_graph": "graph:metadata",
+    "quality_metadata_graph": "graph:quality_metadata",
+    "data_graph": "graph:data"
+  },
+  "target_view": {
+    "name": "MusicArtist Fusion View",
+    "uri": "svm:FV_MusicArtist",
+    "type": "vosv:FusionView"
+  },
+  "specification": {
+    "name": "MusicArtist Fusion View Specification",
+    "uri": "svm:Spec_FV_MusicArtist",
+    "type": "vosv:FusionViewSpecification",
+    "unification_view": "svm:UV_MusicArtist",
+    "fused_entity_type": "mo:MusicArtist",
+    "property_fusion_assertions": [
+      {
+        "uri": "svm:PFA_MusicArtist_Name",
+        "type": "vosv:PropertyFusionAssertion",
+        "property": "foaf:name",
+        "resolution_function": "svm:ArtistNamePreferredSourceFusion"
+      },
+      {
+        "uri": "svm:PFA_MusicArtist_Homepage",
+        "type": "vosv:PropertyFusionAssertion",
+        "property": "foaf:homepage",
+        "resolution_function": "svm:HomepageMostTrustedSourceFusion"
+      },
+      {
+        "uri": "svm:PFA_MusicArtist_Description",
+        "type": "vosv:PropertyFusionAssertion",
+        "property": "dc:description",
+        "resolution_function": "svm:DescriptionLongestTextFusion"
+      }
+    ],
+    "resolution_functions": [
+      {
+        "uri": "svm:ArtistNamePreferredSourceFusion",
+        "type": "vosv:ResolutionFunction",
+        "label": "Artist name preferred-source fusion function"
+      },
+      {
+        "uri": "svm:HomepageMostTrustedSourceFusion",
+        "type": "vosv:ResolutionFunction",
+        "label": "Homepage most-trusted-source fusion function"
+      },
+      {
+        "uri": "svm:DescriptionLongestTextFusion",
+        "type": "vosv:ResolutionFunction",
+        "label": "Description longest-text fusion function"
+      }
+    ],
+    "declared_update_interval": {
+      "value": 7,
+      "unit": "days",
+      "xsd_duration": "P7D"
+    }
+  },
+  "ontology_metadata": {
+    "name": "MusicArtist target ontology",
+    "uri": "svm:MusicArtist_Ontology",
+    "classes": [
+      {
+        "uri": "mo:MusicArtist",
+        "label": "Music Artist"
+      }
+    ],
+    "properties": [
+      {
+        "uri": "foaf:name",
+        "label": "name",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string"
+      },
+      {
+        "uri": "foaf:homepage",
+        "label": "homepage",
+        "domain": "mo:MusicArtist",
+        "range": "rdfs:Resource",
+        "expected_node_kind": "qv:IRI"
+      },
+      {
+        "uri": "dc:description",
+        "label": "description",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string"
+      }
+    ],
+    "predicates": [
+      {
+        "uri": "owl:sameAs",
+        "label": "same as",
+        "domain": "mo:MusicArtist",
+        "range": "mo:MusicArtist"
+      }
+    ]
+  },
+  "materialized_view_metadata": {
+    "uri": "svm:DVG_FV_MusicArtist",
+    "type": "vosv:DataViewGraph",
+    "graph": "graph:FV_MusicArtist",
+    "approach": "materialized",
+    "generated_at_time": "2025-10-03T12:00:00Z"
+  },
+  "provenance": {
+    "generated_from_specification": "svm:Spec_FV_MusicArtist",
+    "used_data_sources": [
+      {
+        "name": "DBpedia",
+        "uri": "svm:DBpedia",
+        "update_frequency": "monthly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-01",
+          "source_last_accessed_on": "2025-10-05"
+        }
+      },
+      {
+        "name": "MusicBrainz",
+        "uri": "svm:MusicBrainz",
+        "update_frequency": "weekly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-03",
+          "source_last_accessed_on": "2025-10-05"
+        }
+      }
+    ],
+    "was_derived_from": [
+      "svm:UV_MusicArtist"
+    ],
+    "source_graphs": [
+      "graph:UV_MusicArtist"
+    ]
+  },
+  "quality_metadata": {
+    "catalog_id": "quality_catalog_FusionView_v2",
+    "source_catalog_version": "fusion_mini_v1",
+    "source_file": "requirement_agent_multiview_experiment_v1/configuration/quality_metadata/quality_metadata_fusion_view_full_v1.json",
+    "target_view_type": "vosv:FusionView",
+    "description": "",
+    "dimensions": [
+      "qv:Completeness",
+      "qv:Consistency",
+      "qv:Timeliness"
+    ],
+    "evaluation_levels": [
+      "qv:AttributeLevel",
+      "qv:ViewLevel"
+    ],
+    "evidence_types": [
+      "qv:MaterializedViewEvidence",
+      "qv:MaterializedViewMetadataEvidence",
+      "qv:ViewSpecificationEvidence"
+    ],
+    "metrics": [
+      {
+        "uri": "qv:ConflictResolutionCoverage",
+        "label": "Conflict resolution coverage",
+        "description": "Ratio of conflicts for a fused property that are resolved by the declared conflict resolution function.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "conflict_resolution_coverage",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:PropertyFusionAssertionCompleteness",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:PropertyFusionAssertionCompleteness",
+        "label": "Property fusion assertion completeness",
+        "description": "Degree to which the fusion specification declares the assertions needed to resolve conflicts for a fused property.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "conflict_resolution_coverage",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ConflictResolutionCoverage",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:FusedValueCompleteness",
+        "label": "Fused value completeness",
+        "description": "Ratio of expected fused values produced for a fused entity property.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "fused_value_completeness",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:FusionRuleOutputCompleteness",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:FusionRuleOutputCompleteness",
+        "label": "Fusion rule output completeness",
+        "description": "Degree to which the fusion specification declares the expected outputs of a fusion rule.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "fused_value_completeness",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:FusedValueCompleteness",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:ConflictResolutionConsistency",
+        "label": "Conflict resolution consistency",
+        "description": "Ratio of resolved conflicts that comply with the declared conflict resolution function.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "conflict_resolution_policy_compliance",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ConflictResolutionPolicyCompliance",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:ConflictResolutionPolicyCompliance",
+        "label": "Conflict resolution policy compliance",
+        "description": "Degree to which the fusion specification supports the declared conflict resolution policy.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "conflict_resolution_policy_compliance",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property",
+          "conflict_resolution_function"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ConflictResolutionConsistency",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:ResidualConflictRate",
+        "label": "Residual conflict rate",
+        "description": "Ratio of conflicts that remain unresolved after fusion for a property.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "residual_conflict_rate",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "fused_entity_type",
+          "conflict_property"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ]
+        },
+        "counterpart_metrics": [],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:FusionViewFreshness",
+        "label": "Fusion view freshness",
+        "description": "Elapsed time in days since the latest fusion view materialization.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "view_freshness",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewMetadataEvidence",
+          "computed_over": "materialized_view_metadata"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "maximum_value": null,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:DeclaredFusionUpdateInterval",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      },
+      {
+        "uri": "qv:DeclaredFusionUpdateInterval",
+        "label": "Declared fusion update interval",
+        "description": "Declared maximum update interval in days for the fusion view.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "view_freshness",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:FusionView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "maximum_value": null,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:FusionViewFreshness",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Mini environment metric for controlled tests."
+        }
+      }
+    ]
+  }
+}

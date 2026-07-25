@@ -1,0 +1,40 @@
+{
+  "view_type": "vosv:FusionView",
+  "note": "Illustrative examples only. They are not evaluation cases.",
+  "examples": [
+    {
+      "category": "valid",
+      "criterion": "At least 93% of expected artist descriptions must have a fused output.",
+      "expected_fragment": {
+        "status": "valid",
+        "observed_metric": "qv:FusedValueCompleteness",
+        "expected_metric": "qv:FusionRuleOutputCompleteness",
+        "threshold": {
+          "value": 0.93,
+          "unit": "qv:Ratio"
+        }
+      }
+    },
+    {
+      "category": "valid",
+      "criterion": "Unresolved homepage conflicts must remain below 4%.",
+      "expected_fragment": {
+        "status": "valid",
+        "observed_metric": "qv:ResidualConflictRate",
+        "expected_metric": null,
+        "operator": "<=",
+        "threshold": {
+          "value": 0.04,
+          "unit": "qv:Ratio"
+        }
+      }
+    },
+    {
+      "category": "unsupported_as_primary_requirement",
+      "criterion": "Resolve every remaining homepage conflict.",
+      "expected_fragment": {
+        "status": "unsupported_as_primary_requirement"
+      }
+    }
+  ]
+}

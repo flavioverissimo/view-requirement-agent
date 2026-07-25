@@ -1,0 +1,786 @@
+{
+  "context_id": "CTX_EV_DBpedia_Artist_v2",
+  "context_version": "2.0",
+  "ekg": {
+    "name": "DBB_Music",
+    "uri": "svm:DBB_Music_EKG",
+    "metadata_graph": "graph:metadata",
+    "quality_metadata_graph": "graph:quality_metadata",
+    "data_graph": "graph:data"
+  },
+  "target_view": {
+    "name": "DBpedia Artist Exported View",
+    "uri": "svm:EV_DBpedia_Artist",
+    "type": "vosv:ExportedView"
+  },
+  "specification": {
+    "name": "DBpedia Artist Exported View Specification",
+    "uri": "svm:Spec_EV_DBpedia_Artist",
+    "type": "vosv:ExportedViewSpecification",
+    "data_source": {
+      "name": "DBpedia",
+      "uri": "svm:DBpedia"
+    },
+    "target_ontology": {
+      "name": "DBpedia Artist Exported View Ontology",
+      "uri": "svm:EV_DBpedia_Artist_Ontology",
+      "classes": [
+        {
+          "uri": "mo:MusicArtist",
+          "label": "Music Artist",
+          "required_properties": [
+            "foaf:name",
+            "foaf:homepage",
+            "dc:description"
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "uri": "foaf:name",
+          "label": "name",
+          "domain": "mo:MusicArtist",
+          "range": "xsd:string",
+          "expected_node_kind": "qv:Literal",
+          "expected_datatype": "xsd:string"
+        },
+        {
+          "uri": "foaf:homepage",
+          "label": "homepage",
+          "domain": "mo:MusicArtist",
+          "range": "rdfs:Resource",
+          "expected_node_kind": "qv:IRI"
+        },
+        {
+          "uri": "dc:description",
+          "label": "description",
+          "domain": "mo:MusicArtist",
+          "range": "xsd:string",
+          "expected_node_kind": "qv:Literal",
+          "expected_datatype": "xsd:string"
+        }
+      ]
+    },
+    "mappings": {
+      "uri": "svm:Mappings_EV_DBpedia_Artist",
+      "type": "vosv:Mappings",
+      "items": [
+        {
+          "uri": "svm:Map_DBpedia_MusicArtist",
+          "mapping_type": "class_mapping",
+          "source_term": "dbo:MusicalArtist",
+          "target_term": "mo:MusicArtist",
+          "target_class": "mo:MusicArtist"
+        },
+        {
+          "uri": "svm:Map_DBpedia_Name",
+          "mapping_type": "property_mapping",
+          "source_term": "foaf:name",
+          "target_term": "foaf:name",
+          "target_class": "mo:MusicArtist",
+          "target_property": "foaf:name",
+          "expected_node_kind": "qv:Literal",
+          "expected_datatype": "xsd:string"
+        },
+        {
+          "uri": "svm:Map_DBpedia_Homepage",
+          "mapping_type": "property_mapping",
+          "source_term": "dbo:homepage",
+          "target_term": "foaf:homepage",
+          "target_class": "mo:MusicArtist",
+          "target_property": "foaf:homepage",
+          "expected_node_kind": "qv:IRI"
+        },
+        {
+          "uri": "svm:Map_DBpedia_Description",
+          "mapping_type": "property_mapping",
+          "source_term": "dc:description",
+          "target_term": "dc:description",
+          "target_class": "mo:MusicArtist",
+          "target_property": "dc:description",
+          "expected_node_kind": "qv:Literal",
+          "expected_datatype": "xsd:string"
+        }
+      ]
+    },
+    "declared_update_interval": {
+      "value": 1,
+      "unit": "month",
+      "xsd_duration": "P1M"
+    }
+  },
+  "ontology_metadata": {
+    "name": "DBpedia Artist Exported View Ontology",
+    "uri": "svm:EV_DBpedia_Artist_Ontology",
+    "classes": [
+      {
+        "uri": "mo:MusicArtist",
+        "label": "Music Artist",
+        "required_properties": [
+          "foaf:name",
+          "foaf:homepage",
+          "dc:description"
+        ]
+      }
+    ],
+    "properties": [
+      {
+        "uri": "foaf:name",
+        "label": "name",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string"
+      },
+      {
+        "uri": "foaf:homepage",
+        "label": "homepage",
+        "domain": "mo:MusicArtist",
+        "range": "rdfs:Resource",
+        "expected_node_kind": "qv:IRI"
+      },
+      {
+        "uri": "dc:description",
+        "label": "description",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string"
+      }
+    ]
+  },
+  "materialized_view_metadata": {
+    "uri": "svm:DVG_EV_DBpedia_Artist",
+    "type": "vosv:DataViewGraph",
+    "graph": "graph:EV_DBpedia_Artist",
+    "approach": "materialized",
+    "generated_at_time": "2025-10-01T10:00:00Z"
+  },
+  "provenance": {
+    "generated_from_specification": "svm:Spec_EV_DBpedia_Artist",
+    "used_data_sources": [
+      {
+        "name": "DBpedia",
+        "uri": "svm:DBpedia",
+        "update_frequency": "monthly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-01",
+          "source_last_accessed_on": "2025-10-05"
+        }
+      }
+    ],
+    "was_derived_from": [
+      "svm:DBpedia"
+    ],
+    "source_graphs": []
+  },
+  "quality_metadata": {
+    "catalog_id": "quality_catalog_ExportedView_v2",
+    "source_catalog_version": "quality_metadata_dbb_music_v8",
+    "source_file": "requirement_agent_experiment_v8/configuration/quality_metadata_dbb_music_v8.json",
+    "target_view_type": "vosv:ExportedView",
+    "description": "Quality metadata for the Requirement Interpretation Agent v8 experiment. Timeliness metrics use elapsed time normalized to days; ratio metrics use qv:Ratio.",
+    "dimensions": [
+      "qv:Completeness",
+      "qv:Conciseness",
+      "qv:Consistency",
+      "qv:Provenance",
+      "qv:SemanticAccuracy",
+      "qv:Timeliness",
+      "qv:Trustworthiness"
+    ],
+    "evaluation_levels": [
+      "qv:AttributeLevel",
+      "qv:ClassLevel",
+      "qv:InstanceLevel",
+      "qv:ViewLevel"
+    ],
+    "evidence_types": [
+      "qv:MaterializedViewEvidence",
+      "qv:MaterializedViewMetadataEvidence",
+      "qv:ProvenanceMetadataEvidence",
+      "qv:ViewSpecificationEvidence"
+    ],
+    "metrics": [
+      {
+        "uri": "qv:AttributeCoverage",
+        "label": "Attribute Coverage",
+        "description": "Adapted from Zaveri et al. CM2 property completeness and DDP-SV exported-view mapping context.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "qv:attribute_coverage",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_property"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:PropertyMappingCompleteness",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "adapted_from_literature",
+          "references": [],
+          "adaptation_note": "Adapted from Zaveri et al. CM2 property completeness and DDP-SV exported-view mapping context."
+        }
+      },
+      {
+        "uri": "qv:PropertyMappingCompleteness",
+        "label": "Property Mapping Completeness",
+        "description": "Proposed DDP-SV view-specific counterpart for expected property completeness over mappings.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "qv:property_mapping_completeness",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "exported_view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_property"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:AttributeCoverage",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Proposed DDP-SV view-specific counterpart for expected property completeness over mappings."
+        }
+      },
+      {
+        "uri": "qv:ClassAttributeCompleteness",
+        "label": "Class Attribute Completeness",
+        "description": "Adapted from Zaveri et al. CM1 schema completeness and CM2 property completeness.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "qv:class_attribute_completeness",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:ClassLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_properties"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ClassPropertyMappingCompleteness",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "adapted_from_literature",
+          "references": [],
+          "adaptation_note": "Adapted from Zaveri et al. CM1 schema completeness and CM2 property completeness."
+        }
+      },
+      {
+        "uri": "qv:ClassPropertyMappingCompleteness",
+        "label": "Class Property Mapping Completeness",
+        "description": "Proposed DDP-SV view-specific counterpart for class-level expected mapping completeness.",
+        "dimension": "qv:Completeness",
+        "quality_aspect": "qv:class_property_mapping_completeness",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:ClassLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "exported_view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_properties"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ClassAttributeCompleteness",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Proposed DDP-SV view-specific counterpart for class-level expected mapping completeness."
+        }
+      },
+      {
+        "uri": "qv:NodeKindConsistency",
+        "label": "Node Kind Consistency",
+        "description": "Adapted from Zaveri et al. CS3 misuse of owl:DatatypeProperty/ObjectProperty and DQM problem classes.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "qv:node_kind_consistency",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_property",
+          "expected_node_kind"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:NodeKindGenerationConsistency",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "adapted_from_literature",
+          "references": [],
+          "adaptation_note": "Adapted from Zaveri et al. CS3 misuse of owl:DatatypeProperty/ObjectProperty and DQM problem classes."
+        }
+      },
+      {
+        "uri": "qv:NodeKindGenerationConsistency",
+        "label": "Node Kind Generation Consistency",
+        "description": "Proposed DDP-SV specification counterpart for node-kind generation rules.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "qv:node_kind_generation_consistency",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "exported_view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "target_class",
+          "target_property",
+          "expected_node_kind"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:NodeKindConsistency",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Proposed DDP-SV specification counterpart for node-kind generation rules."
+        }
+      },
+      {
+        "uri": "qv:DomainRangeConsistency",
+        "label": "Domain Range Consistency",
+        "description": "Adapted from Zaveri et al. CS9 correct domain and range definition and DQM problem classes.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "qv:domain_range_consistency",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewEvidence",
+          "computed_over": "materialized_view_data"
+        },
+        "required_scope": [
+          "target_view",
+          "target_property",
+          "expected_domain",
+          "expected_range"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:DomainRangeMappingConsistency",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "adapted_from_literature",
+          "references": [],
+          "adaptation_note": "Adapted from Zaveri et al. CS9 correct domain and range definition and DQM problem classes."
+        }
+      },
+      {
+        "uri": "qv:DomainRangeMappingConsistency",
+        "label": "Domain Range Mapping Consistency",
+        "description": "Proposed DDP-SV specification counterpart for domain/range mapping constraints.",
+        "dimension": "qv:Consistency",
+        "quality_aspect": "qv:domain_range_mapping_consistency",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:AttributeLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "exported_view_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "target_property",
+          "expected_domain",
+          "expected_range"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "qv:Ratio",
+          "minimum_value": 0.0,
+          "maximum_value": 1.0,
+          "preferred_direction": "higher_is_better",
+          "accepted_operators": [
+            ">=",
+            ">",
+            "="
+          ]
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:DomainRangeConsistency",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Proposed DDP-SV specification counterpart for domain/range mapping constraints."
+        }
+      },
+      {
+        "uri": "qv:ViewFreshness",
+        "label": "View Freshness",
+        "description": "Measures the elapsed time between the latest materialization or generation timestamp of a semantic view and a reference time. Lower values indicate fresher views.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "qv:view_freshness_elapsed_time",
+        "metric_role": [
+          "observed"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:MaterializedViewMetadataEvidence",
+          "computed_over": "materialization_metadata"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "maximum_value": null,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ],
+          "canonical_temporal_unit": "days"
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:DeclaredUpdateInterval",
+            "role": "expected"
+          }
+        ],
+        "source": {
+          "source_kind": "adapted_from_literature",
+          "references": [],
+          "adaptation_note": "Adapted from Zaveri et al. TI1/TI2 freshness/currency metrics."
+        },
+        "temporal_conversion_rules": [
+          {
+            "source_unit": "day",
+            "target_unit": "days",
+            "factor": 1.0
+          },
+          {
+            "source_unit": "days",
+            "target_unit": "days",
+            "factor": 1.0
+          },
+          {
+            "source_unit": "week",
+            "target_unit": "days",
+            "factor": 7.0
+          },
+          {
+            "source_unit": "weeks",
+            "target_unit": "days",
+            "factor": 7.0
+          },
+          {
+            "source_unit": "month",
+            "target_unit": "days",
+            "factor": 30.0
+          },
+          {
+            "source_unit": "months",
+            "target_unit": "days",
+            "factor": 30.0
+          },
+          {
+            "source_unit": "year",
+            "target_unit": "days",
+            "factor": 365.0
+          },
+          {
+            "source_unit": "years",
+            "target_unit": "days",
+            "factor": 365.0
+          }
+        ]
+      },
+      {
+        "uri": "qv:DeclaredUpdateInterval",
+        "label": "Declared Update Interval",
+        "description": "Measures the maximum update interval declared in the semantic-view specification, normalized to days.",
+        "dimension": "qv:Timeliness",
+        "quality_aspect": "qv:declared_update_interval",
+        "metric_role": [
+          "expected"
+        ],
+        "applicable_view_types": [
+          "vosv:ExportedView"
+        ],
+        "applicable_levels": [
+          "qv:ViewLevel"
+        ],
+        "evidence": {
+          "type": "qv:ViewSpecificationEvidence",
+          "computed_over": "view_update_specification"
+        },
+        "required_scope": [
+          "target_view",
+          "reference_time"
+        ],
+        "optional_scope": [],
+        "result": {
+          "datatype": "xsd:decimal",
+          "unit": "days",
+          "minimum_value": 0.0,
+          "maximum_value": null,
+          "preferred_direction": "lower_is_better",
+          "accepted_operators": [
+            "<=",
+            "<",
+            "="
+          ],
+          "canonical_temporal_unit": "days"
+        },
+        "counterpart_metrics": [
+          {
+            "uri": "qv:ViewFreshness",
+            "role": "observed"
+          }
+        ],
+        "source": {
+          "source_kind": "proposed_view_specific_metric",
+          "references": [],
+          "adaptation_note": "Proposed DDP-SV metadata counterpart for declared update frequency or interval."
+        },
+        "temporal_conversion_rules": [
+          {
+            "source_unit": "day",
+            "target_unit": "days",
+            "factor": 1.0
+          },
+          {
+            "source_unit": "days",
+            "target_unit": "days",
+            "factor": 1.0
+          },
+          {
+            "source_unit": "week",
+            "target_unit": "days",
+            "factor": 7.0
+          },
+          {
+            "source_unit": "weeks",
+            "target_unit": "days",
+            "factor": 7.0
+          },
+          {
+            "source_unit": "month",
+            "target_unit": "days",
+            "factor": 30.0
+          },
+          {
+            "source_unit": "months",
+            "target_unit": "days",
+            "factor": 30.0
+          },
+          {
+            "source_unit": "year",
+            "target_unit": "days",
+            "factor": 365.0
+          },
+          {
+            "source_unit": "years",
+            "target_unit": "days",
+            "factor": 365.0
+          }
+        ]
+      }
+    ]
+  }
+}
