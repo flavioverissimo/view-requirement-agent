@@ -1,0 +1,39 @@
+{
+  "view_type": "vosv:LinksetView",
+  "note": "Illustrative examples only. They are not evaluation cases.",
+  "examples": [
+    {
+      "category": "valid",
+      "criterion": "At least 82% of source artists must have an owl:sameAs link.",
+      "expected_fragment": {
+        "status": "valid",
+        "observed_metric": "qv:LinkCoverage",
+        "expected_metric": "qv:LinkRuleCompleteness",
+        "operator": ">=",
+        "threshold": {
+          "value": 0.82,
+          "unit": "qv:Ratio"
+        }
+      }
+    },
+    {
+      "category": "clarification_required",
+      "criterion": "The artist links should have acceptable quality.",
+      "expected_fragment": {
+        "status": "clarification_required",
+        "missing_or_ambiguous_fields": [
+          "quality_aspect",
+          "metric",
+          "threshold"
+        ]
+      }
+    },
+    {
+      "category": "unsupported_as_primary_requirement",
+      "criterion": "Generate the missing artist links.",
+      "expected_fragment": {
+        "status": "unsupported_as_primary_requirement"
+      }
+    }
+  ]
+}

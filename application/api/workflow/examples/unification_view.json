@@ -1,0 +1,36 @@
+{
+  "view_type": "vosv:UnificationView",
+  "note": "Illustrative examples only. They are not evaluation cases.",
+  "examples": [
+    {
+      "category": "valid",
+      "criterion": "At least 91% of artist records must be canonicalized by the declared normalization function.",
+      "expected_fragment": {
+        "status": "valid",
+        "observed_metric": "qv:CanonicalizationCoverage",
+        "normalization_function": "svm:ArtistIdentityResolutionFunction",
+        "threshold": {
+          "value": 0.91,
+          "unit": "qv:Ratio"
+        }
+      }
+    },
+    {
+      "category": "clarification_required",
+      "criterion": "The canonicalization coverage should be high.",
+      "expected_fragment": {
+        "status": "clarification_required",
+        "missing_or_ambiguous_fields": [
+          "threshold"
+        ]
+      }
+    },
+    {
+      "category": "unsupported_as_primary_requirement",
+      "criterion": "Create canonical artists for the remaining duplicates.",
+      "expected_fragment": {
+        "status": "unsupported_as_primary_requirement"
+      }
+    }
+  ]
+}

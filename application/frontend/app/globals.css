@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-paper bg-grain text-ink font-body min-h-screen;
+}
+
+.markdown-output h1,
+.markdown-output h2,
+.markdown-output h3 {
+  @apply font-display text-ink;
+}
+
+.markdown-output h1 {
+  @apply text-3xl;
+}
+
+.markdown-output h2 {
+  @apply mt-8 text-2xl;
+}
+
+.markdown-output h3 {
+  @apply mt-6 text-xl;
+}
+
+.markdown-output p {
+  @apply mt-3 leading-7 text-slate;
+}
+
+.markdown-output ul {
+  @apply mt-3 list-disc space-y-2 pl-6 text-slate;
+}
+
+.markdown-output li {
+  @apply leading-7;
+}
+
+.markdown-output strong {
+  @apply text-ink;
+}
+
+.markdown-output code {
+  @apply rounded bg-white/80 px-1.5 py-0.5 text-sm text-ember;
+}
+
+.markdown-output pre {
+  @apply mt-4 overflow-x-auto rounded-2xl bg-ink p-4 text-sm text-paper;
+}
+
+.markdown-output pre code {
+  @apply bg-transparent p-0 text-paper;
+}

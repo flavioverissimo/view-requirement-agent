@@ -1,0 +1,22 @@
+{
+    "DBpedia Artist Exported View": {
+        "name": "DBpedia Artist Exported View",
+        "uri": "svm:EV_DBpedia_Artist",
+        "type": "exported_view"
+    },
+    "MusicArtist Fusion View": {
+        "name": "MusicArtist Fusion View",
+        "uri": "svm:EV_DBpedia_Artist",
+        "type": "fusion_view"
+    },
+    "MusicArtist Linkset View": {
+        "name": "MusicArtist Linkset View",
+        "uri": "svm:EV_DBpedia_Artist",
+        "type": "linkset_view"
+    },
+    "MusicArtist Unification View": {
+        "name": "MusicArtist Unification View",
+        "uri": "svm:EV_DBpedia_Artist",
+        "type": "unification_view"
+    }
+}
