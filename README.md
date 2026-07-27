@@ -7,7 +7,7 @@
 >
 > You can test the web application at:
 >
-> [![Application preview](docs/images/application-preview.png)](https://view-requirement-agent.vercel.app/)
+> [![Application preview](docs/images/app.png)](https://view-requirement-agent.vercel.app/)
 >
 > The hosted application will remain available only until **August 25, 2026, at 12:00 AM**.
 >
