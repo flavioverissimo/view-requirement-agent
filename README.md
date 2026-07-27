@@ -1,5 +1,19 @@
 # View Requirement Agent
 
+> [!IMPORTANT]
+> ## Try the Application Online
+>
+> You can test the web application at:
+>
+> **[https://view-requirement-agent.vercel.app/](https://view-requirement-agent.vercel.app/)**
+>
+> The hosted application will remain available only until **August 25, 2026, at 12:00 AM**.
+>
+> After this date, to use the application, you will need to download the repository and prepare the local environment by following the instructions provided in the respective README files:
+>
+> - [application/README.md](application/README.md) for the web application
+> - [view_agent/README.md](view_agent/README.md) for the command-line application
+
 This repository contains two ways to use the same requirement interpretation workflow:
 
 - `application/`: a complete web application with a front-end and a back-end API
