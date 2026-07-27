@@ -1,5 +1,3 @@
-![Application preview](docs/images/application-preview.png)
-
 # View Requirement Agent
 
 > [!IMPORTANT]
