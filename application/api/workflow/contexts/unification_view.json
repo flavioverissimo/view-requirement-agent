@@ -1,6 +1,6 @@
 {
-  "context_id": "CTX_UV_MusicArtist_v3",
-  "context_version": "3.0",
+  "context_id": "CTX_UV_MusicArtist_v2",
+  "context_version": "2.0",
   "ekg": {
     "name": "DBB_Music",
     "uri": "svm:DBB_Music_EKG",
@@ -21,50 +21,39 @@
       "svm:LV_MusicArtist"
     ],
     "generalization_class": "mo:MusicArtist",
-    "canonical_resource": "can:MusicArtist",
-    "canonical_uri_template": "https://ekg.example.org/canonical/music-artist/{musicbrainz_guid}",
+    "canonical_resource": "svm:CanonicalMusicArtist",
     "normalization_functions": [
       {
-        "uri": "svm:ArtistIdentityNormalizationByMBID",
+        "uri": "svm:ArtistIdentityResolutionFunction",
         "type": "vosv:NormalizationFunction",
-        "label": "MusicArtist identity normalization by MusicBrainz GUID",
-        "purpose": "Assign a canonical MusicArtist IRI to MusicBrainz and DBpedia entities connected by owl:sameAs.",
-        "uses_properties": [
-          "mo:musicbrainz_guid"
-        ],
+        "label": "Artist identity resolution function",
+        "purpose": "Canonicalize equivalent artist entities and normalize identity links.",
+        "uses_properties": [],
         "uses_link_predicates": [
           "owl:sameAs"
         ],
-        "source_mapping": "lb:artist_dbpedia",
-        "produces_canonical_resource": "can:MusicArtist"
+        "produces_canonical_resource": "svm:CanonicalMusicArtist"
       },
       {
-        "uri": "svm:ArtistNameNormalization",
+        "uri": "svm:ArtistNameNormalizationFunction",
         "type": "vosv:NormalizationFunction",
-        "label": "MusicArtist name normalization",
-        "purpose": "Normalize canonical artist labels using MusicBrainz name and sort-label values.",
+        "label": "Artist name normalization function",
+        "purpose": "Normalize artist name values used during entity processing.",
         "uses_properties": [
-          "foaf:name",
-          "ov:sortLabel"
+          "foaf:name"
         ],
-        "uses_link_predicates": [
-          "owl:sameAs"
-        ],
-        "produces_canonical_resource": "can:MusicArtist"
+        "uses_link_predicates": [],
+        "produces_canonical_resource": "svm:CanonicalMusicArtist"
       }
     ],
     "source_entity_types": [
       {
-        "source": "MusicBrainz",
-        "source_class": "mo:MusicArtist",
-        "generalization_class": "mo:MusicArtist",
-        "identifier_property": "mo:musicbrainz_guid"
+        "source": "DBpedia",
+        "class": "mo:MusicArtist"
       },
       {
-        "source": "DBpedia",
-        "source_class": "dbo:MusicalArtist",
-        "mapped_class": "mo:MusicArtist",
-        "generalization_class": "mo:MusicArtist"
+        "source": "MusicBrainz",
+        "class": "mo:MusicArtist"
       }
     ],
     "declared_update_interval": {
@@ -74,58 +63,22 @@
     }
   },
   "ontology_metadata": {
-    "name": "MusicArtist unification ontology context",
-    "uri": "svm:MusicArtist_Unification_Ontology_Context",
+    "name": "MusicArtist target ontology",
+    "uri": "svm:MusicArtist_Ontology",
     "classes": [
       {
         "uri": "mo:MusicArtist",
         "label": "Music Artist"
-      },
-      {
-        "uri": "dbo:MusicalArtist",
-        "label": "DBpedia Musical Artist"
-      },
-      {
-        "uri": "can:MusicArtist",
-        "label": "Canonical Music Artist"
       }
     ],
     "properties": [
-      {
-        "uri": "mo:musicbrainz_guid",
-        "label": "MusicBrainz GUID",
-        "domain": "mo:MusicArtist",
-        "range": "xsd:string",
-        "expected_node_kind": "qv:Literal",
-        "expected_datatype": "xsd:string",
-        "declared_by": [
-          "MusicbrainzOntoUltimate.owl",
-          "lb:Artist"
-        ]
-      },
       {
         "uri": "foaf:name",
         "label": "name",
         "domain": "mo:MusicArtist",
         "range": "xsd:string",
         "expected_node_kind": "qv:Literal",
-        "expected_datatype": "xsd:string",
-        "declared_by": [
-          "MusicbrainzOntoUltimate.owl",
-          "lb:Artist"
-        ]
-      },
-      {
-        "uri": "ov:sortLabel",
-        "label": "sort label",
-        "domain": "mo:MusicArtist",
-        "range": "xsd:string",
-        "expected_node_kind": "qv:Literal",
-        "expected_datatype": "xsd:string",
-        "declared_by": [
-          "MusicbrainzOntoUltimate.owl",
-          "lb:Artist"
-        ]
+        "expected_datatype": "xsd:string"
       }
     ],
     "predicates": [
@@ -133,11 +86,7 @@
         "uri": "owl:sameAs",
         "label": "same as",
         "domain": "mo:MusicArtist",
-        "range": "mo:MusicArtist",
-        "semantic_characteristics": [
-          "symmetric",
-          "transitive"
-        ]
+        "range": "mo:MusicArtist"
       }
     ]
   },
@@ -154,16 +103,22 @@
       {
         "name": "DBpedia",
         "uri": "svm:DBpedia",
-        "view": "svm:EV_DBpedia_Artist",
-        "source_class": "dbo:MusicalArtist",
-        "target_class": "mo:MusicArtist"
+        "update_frequency": "monthly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-01",
+          "source_last_accessed_on": "2025-10-05"
+        }
       },
       {
         "name": "MusicBrainz",
         "uri": "svm:MusicBrainz",
-        "view": "svm:EV_MusicBrainz_Artist",
-        "source_class": "mo:MusicArtist",
-        "identifier_property": "mo:musicbrainz_guid"
+        "update_frequency": "weekly",
+        "record_count": 5,
+        "provenance": {
+          "last_update_on": "2025-10-03",
+          "source_last_accessed_on": "2025-10-05"
+        }
       }
     ],
     "was_derived_from": [
@@ -171,11 +126,6 @@
     ],
     "source_graphs": [
       "graph:LV_MusicArtist"
-    ],
-    "source_artifacts": [
-      "mapR2RML_MusicBraiz_completo(1).ttl",
-      "MusicbrainzOntoUltimate(1).owl",
-      "dbb_music_artist_ekg(3).trig"
     ]
   },
   "quality_metadata": {
