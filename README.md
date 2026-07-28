@@ -5,9 +5,10 @@
 >
 > You can test the web application at:
 > **[https://view-requirement-agent.vercel.app/](https://view-requirement-agent.vercel.app/)**
+> The hosted application will remain available only until **August 25, 2026, at 12:00 AM**.
+> 
 > [![Application preview](docs/images/app.png)](https://view-requirement-agent.vercel.app/)
 >
-> The hosted application will remain available only until **August 25, 2026, at 12:00 AM**.
 >
 > After this date, to use the application, you will need to download the repository and prepare the local environment by following the instructions provided in the respective README files:
 >
