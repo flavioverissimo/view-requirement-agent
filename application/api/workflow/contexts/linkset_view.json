@@ -1,6 +1,6 @@
 {
-  "context_id": "CTX_LV_MusicArtist_v2",
-  "context_version": "2.0",
+  "context_id": "CTX_LV_MusicArtist_v3",
+  "context_version": "3.0",
   "ekg": {
     "name": "DBB_Music",
     "uri": "svm:DBB_Music_EKG",
@@ -18,32 +18,51 @@
     "uri": "svm:Spec_LV_MusicArtist",
     "type": "vosv:LinksetViewSpecification",
     "source_view": {
-      "name": "DBpedia Artist Exported View",
-      "uri": "svm:EV_DBpedia_Artist",
-      "type": "vosv:ExportedView"
-    },
-    "target_view": {
       "name": "MusicBrainz Artist Exported View",
       "uri": "svm:EV_MusicBrainz_Artist",
-      "type": "vosv:ExportedView"
+      "type": "vosv:ExportedView",
+      "entity_class": "mo:MusicArtist",
+      "subject_uri_template": "http://musicbrainz.org/artist/{gid}#_"
+    },
+    "target_view": {
+      "name": "DBpedia Artist Exported View",
+      "uri": "svm:EV_DBpedia_Artist",
+      "type": "vosv:ExportedView",
+      "source_entity_class": "dbo:MusicalArtist",
+      "entity_class": "mo:MusicArtist",
+      "subject_uri_pattern": "http://dbpedia.org/resource/{resource}"
     },
     "link_rules": [
       {
-        "uri": "svm:LR_MusicArtist_sameAs_1",
+        "uri": "svm:LR_LinkedBrainz_Artist_DBpedia",
         "type": "vosv:LinkRule",
         "source_class": "mo:MusicArtist",
         "target_class": "mo:MusicArtist",
         "link_predicate": "owl:sameAs",
-        "match_function": "svm:ArtistNameAndDateMatch",
+        "mapping_rule": "lb:artist_dbpedia",
+        "match_function": "svm:WikipediaToDBpediaURITransform",
+        "source_evidence_property": "foaf:isPrimaryTopicOf",
         "supports_transitivity": true
       }
     ],
     "match_functions": [
       {
-        "uri": "svm:ArtistNameAndDateMatch",
-        "label": "Artist name and date matching function",
+        "uri": "svm:WikipediaToDBpediaURITransform",
+        "label": "Wikipedia-to-DBpedia URI transformation",
         "status": "declared",
-        "type": "vosv:MatchFunction"
+        "type": "vosv:MatchFunction",
+        "method": "deterministic_uri_transformation",
+        "description": "Transforms supported-language Wikipedia artist URLs into DBpedia resource IRIs, following the LinkedBrainz lb:artist_dbpedia R2RML rule.",
+        "source_mapping": "lb:artist_dbpedia",
+        "supported_wikipedia_languages": [
+          "de",
+          "el",
+          "en",
+          "es",
+          "ko",
+          "pl",
+          "pt"
+        ]
       }
     ],
     "declared_update_interval": {
@@ -53,22 +72,52 @@
     }
   },
   "ontology_metadata": {
-    "name": "MusicArtist target ontology",
-    "uri": "svm:MusicArtist_Ontology",
+    "name": "MusicArtist linkset ontology context",
+    "uri": "svm:MusicArtist_Linkset_Ontology_Context",
     "classes": [
       {
         "uri": "mo:MusicArtist",
         "label": "Music Artist"
+      },
+      {
+        "uri": "dbo:MusicalArtist",
+        "label": "DBpedia Musical Artist"
       }
     ],
     "properties": [
+      {
+        "uri": "mo:musicbrainz_guid",
+        "label": "MusicBrainz GUID",
+        "domain": "mo:MusicArtist",
+        "range": "xsd:string",
+        "expected_node_kind": "qv:Literal",
+        "expected_datatype": "xsd:string",
+        "declared_by": [
+          "MusicbrainzOntoUltimate.owl",
+          "lb:Artist"
+        ]
+      },
       {
         "uri": "foaf:name",
         "label": "name",
         "domain": "mo:MusicArtist",
         "range": "xsd:string",
         "expected_node_kind": "qv:Literal",
-        "expected_datatype": "xsd:string"
+        "expected_datatype": "xsd:string",
+        "declared_by": [
+          "MusicbrainzOntoUltimate.owl",
+          "lb:Artist"
+        ]
+      },
+      {
+        "uri": "foaf:isPrimaryTopicOf",
+        "label": "primary topic page",
+        "domain": "mo:MusicArtist",
+        "range": "rdfs:Resource",
+        "expected_node_kind": "qv:IRI",
+        "declared_by": [
+          "lb:artist_wikipedia"
+        ]
       }
     ],
     "predicates": [
@@ -76,7 +125,11 @@
         "uri": "owl:sameAs",
         "label": "same as",
         "domain": "mo:MusicArtist",
-        "range": "mo:MusicArtist"
+        "range": "mo:MusicArtist",
+        "semantic_characteristics": [
+          "symmetric",
+          "transitive"
+        ]
       }
     ]
   },
@@ -93,32 +146,32 @@
       {
         "name": "DBpedia",
         "uri": "svm:DBpedia",
-        "update_frequency": "monthly",
-        "record_count": 5,
-        "provenance": {
-          "last_update_on": "2025-10-01",
-          "source_last_accessed_on": "2025-10-05"
-        }
+        "view": "svm:EV_DBpedia_Artist",
+        "source_class": "dbo:MusicalArtist",
+        "target_class": "mo:MusicArtist"
       },
       {
         "name": "MusicBrainz",
         "uri": "svm:MusicBrainz",
-        "update_frequency": "weekly",
-        "record_count": 5,
-        "provenance": {
-          "last_update_on": "2025-10-03",
-          "source_last_accessed_on": "2025-10-05"
-        }
+        "view": "svm:EV_MusicBrainz_Artist",
+        "source_class": "mo:MusicArtist",
+        "identifier_property": "mo:musicbrainz_guid"
       }
     ],
     "was_derived_from": [
-      "svm:EV_DBpedia_Artist",
-      "svm:EV_MusicBrainz_Artist"
+      "svm:EV_MusicBrainz_Artist",
+      "svm:EV_DBpedia_Artist"
     ],
     "source_graphs": [
-      "graph:EV_DBpedia_Artist",
-      "graph:EV_MusicBrainz_Artist"
-    ]
+      "graph:EV_MusicBrainz_Artist",
+      "graph:EV_DBpedia_Artist"
+    ],
+    "source_artifacts": [
+      "mapR2RML_MusicBraiz_completo(1).ttl",
+      "MusicbrainzOntoUltimate(1).owl",
+      "dbb_music_artist_ekg(3).trig"
+    ],
+    "link_mapping": "lb:artist_dbpedia"
   },
   "quality_metadata": {
     "catalog_id": "quality_catalog_LinksetView_v2",
